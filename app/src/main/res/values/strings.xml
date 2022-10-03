@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">smart_Attendance</string>
+    <string name="app_name">smart attendance</string>
+    <string name="server_client_id">197392019228-d0n763iqtt9hfoahuqmme50aqeu8ausm.apps.googleusercontent.com</string>
 </resources>
