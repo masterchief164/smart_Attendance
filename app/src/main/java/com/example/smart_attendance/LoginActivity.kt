@@ -7,6 +7,7 @@ import android.util.Log.d
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.smart_attendance.databinding.ActivityLoginBinding
 import com.example.smart_attendance.other.EventObserver
@@ -84,12 +85,25 @@ class LoginActivity : AppCompatActivity() {
     private fun subscribeToObservers() {
         loginViewModel.loginStatus.observe(this, EventObserver(
             onError = {
+                binding.progressBar2.isVisible = false
+                binding.student.isVisible = true
+                binding.button2.isVisible = true
+                binding.textView.isVisible = true
                 d("LoginActivity", "Error: $it")
             },
             onLoading = {
+                binding.progressBar2.isVisible = true
+                binding.student.isVisible = false
+                binding.button2.isVisible = false
+                binding.textView.isVisible = false
                 d("LoginActivity", "Loading")
             }
-        ) {user->
+        ) { user ->
+
+            binding.progressBar2.isVisible = false
+            binding.student.isVisible = true
+            binding.button2.isVisible = true
+            binding.textView.isVisible = true
             d("LoginActivity", "Success: $user")
             Intent(this, MainActivity::class.java).also {
                 startActivity(it)
