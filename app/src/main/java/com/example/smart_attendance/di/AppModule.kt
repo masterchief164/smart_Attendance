@@ -44,7 +44,7 @@ object AppModule {
     @Singleton
     @Provides
     fun providesRetrofitInstance(): Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.194.203:8000")
+        .baseUrl("https://smart-attendance-edp.herokuapp.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

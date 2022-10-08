@@ -3,6 +3,7 @@ package com.example.smart_attendance.repositories
 import android.content.SharedPreferences
 import android.util.Log.e
 import com.example.smart_attendance.api.APIInterface
+import com.example.smart_attendance.data.QRData
 import com.example.smart_attendance.data.User
 import com.example.smart_attendance.other.Resource
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -33,6 +34,14 @@ class DefaultMainRepository @Inject constructor(
         } catch (err: Exception) {
             e("Logout1", err.message.toString())
         }
+    }
 
+    override suspend fun getQRData(qrString: String): Resource<QRData> {
+        return try {
+            val qrData = gson.fromJson(qrString, QRData::class.java)
+            Resource.Success(qrData)
+        } catch (err: Exception) {
+            Resource.Error("Invalid QR Code")
+        }
     }
 }
