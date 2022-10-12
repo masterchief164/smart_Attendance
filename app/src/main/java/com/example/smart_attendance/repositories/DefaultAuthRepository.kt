@@ -46,7 +46,7 @@ class DefaultAuthRepository @Inject constructor(
     }
 
     override fun saveCookie(cookie: String) {
-        sharedPreferences.edit().putString("COOKIE", cookie).apply()
+        sharedPreferences.edit().putString("COOKIE", cookie.split("=")[1]).apply()
     }
 
     override suspend fun saveUser(user: User) {

@@ -7,6 +7,7 @@ import android.util.Log.d
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.example.smart_attendance.data.QRData
 import com.example.smart_attendance.databinding.ActivityMainBinding
 import com.example.smart_attendance.di.GlideApp
 import com.example.smart_attendance.other.EventObserver
@@ -24,12 +25,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-
         mainViewModel.getUser()
         subscribeToObservers()
 
         val fromScanner = intent.getBooleanExtra("fromScanner", false)
-        if(fromScanner) {
+        if (fromScanner) {
             val qrString = intent.getStringExtra("qrString")
             if (qrString != null) {
                 val qrData = mainViewModel.getQRData(qrString)
@@ -52,6 +52,10 @@ class MainActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+    }
+
+    private fun attendSession(sessionDetails: QRData) {
+        mainViewModel.attendSession(sessionDetails)
     }
 
     private fun subscribeToObservers() {
@@ -86,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.getQRDataStatus.observe(this, EventObserver(
             onError = {
                 d("LoginActivity", "Error: $it")
+                Toast.makeText(this, "Error: $it", Toast.LENGTH_SHORT).show()
             },
             onLoading = {
                 d("LoginActivity", "Loading")
@@ -102,8 +107,23 @@ class MainActivity : AppCompatActivity() {
             binding.roll.isVisible = true
             binding.floatingActionButton.isVisible = true
 
+
             d("efweg", qrData.toString())
+            attendSession(qrData)
             binding.qrData.text = "Session ID: ${qrData.session_id}, nonce: ${qrData.nonce}"
+        })
+
+        mainViewModel.attendSessionStatus.observe(this, EventObserver(
+            onError = {
+                d("LoginActivity", "Error: $it")
+                Toast.makeText(this, "Error: $it", Toast.LENGTH_SHORT).show()
+            },
+            onLoading = {
+                d("LoginActivity", "Loading")
+            }
+        ) { attendSession ->
+            d("efweg", attendSession.toString())
+            Toast.makeText(this, "Session attended", Toast.LENGTH_SHORT).show()
         })
     }
 }

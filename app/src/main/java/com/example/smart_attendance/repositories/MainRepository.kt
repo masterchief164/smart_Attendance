@@ -10,4 +10,6 @@ interface MainRepository {
     suspend fun logoutUser()
 
     suspend fun getQRData(qrString: String): Resource<QRData>
+
+    suspend fun attendSession(sessionDetails: QRData): Resource<Boolean>
 }

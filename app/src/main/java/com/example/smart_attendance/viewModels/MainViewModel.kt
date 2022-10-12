@@ -25,6 +25,9 @@ class MainViewModel @Inject constructor(
     private val _getQRDataStatus = MutableLiveData<Event<Resource<QRData>>>()
     val getQRDataStatus: LiveData<Event<Resource<QRData>>> = _getQRDataStatus
 
+    private val _attendSessionStatus = MutableLiveData<Event<Resource<Boolean>>>()
+    val attendSessionStatus: LiveData<Event<Resource<Boolean>>> = _attendSessionStatus
+
     fun getUser() {
         _getUserStatus.postValue(Event(Resource.Loading()))
         viewModelScope.launch(Dispatchers.IO) {
@@ -38,6 +41,14 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val qrData = repository.getQRData(qrString)
             _getQRDataStatus.postValue(Event(qrData))
+        }
+    }
+
+    fun attendSession(sessionDetails: QRData) {
+        _attendSessionStatus.postValue(Event(Resource.Loading()))
+        viewModelScope.launch(Dispatchers.IO) {
+            val resp = repository.attendSession(sessionDetails)
+            _attendSessionStatus.postValue(Event(resp))
         }
     }
 
