@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.floatingActionButton.setOnClickListener {
+        binding.scanQR.setOnClickListener {
             Intent(this, QRScanner::class.java).also {
                 startActivity(it)
             }
@@ -67,24 +67,19 @@ class MainActivity : AppCompatActivity() {
                 d("LoginActivity", "Loading")
                 binding.progressBar.isVisible = true
                 binding.email.isVisible = false
-                binding.name.isVisible = false
-                binding.roll.isVisible = false
-                binding.floatingActionButton.isVisible = false
+                binding.userName.text = "Welcome Back, User!"
             }
         ) { user ->
             d("LoginActivity", "Success: $user")
             binding.progressBar.isVisible = false
             binding.email.isVisible = true
-            binding.name.isVisible = true
-            binding.roll.isVisible = true
-            binding.floatingActionButton.isVisible = true
+            binding.userName.isVisible = true
 
-            binding.name.text = user.name
+            binding.userName.text = "Welcome Back, ${user.name.split(" ")[0]}!"
             binding.email.text = user.email
-            binding.roll.text = user.roll
 
             GlideApp.with(this)
-                .load(user.picture).into(binding.imageView)
+                .load(user.picture).into(binding.ivProfileImage)
         })
 
         mainViewModel.getQRDataStatus.observe(this, EventObserver(
@@ -96,16 +91,12 @@ class MainActivity : AppCompatActivity() {
                 d("LoginActivity", "Loading")
                 binding.progressBar.isVisible = true
                 binding.email.isVisible = false
-                binding.name.isVisible = false
-                binding.roll.isVisible = false
-                binding.floatingActionButton.isVisible = false
+                binding.userName.isVisible = false
             }
         ) { qrData ->
             binding.progressBar.isVisible = false
             binding.email.isVisible = true
-            binding.name.isVisible = true
-            binding.roll.isVisible = true
-            binding.floatingActionButton.isVisible = true
+            binding.userName.isVisible = true
 
 
             d("efweg", qrData.toString())

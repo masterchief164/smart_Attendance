@@ -9,7 +9,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface APIInterface {
-    @POST("/login/googleLogin")
+    @POST("/auth/googleLogin")
     suspend fun postLogin(@Body loginRequest: LoginRequest): Response<User>
 
     @POST("/session/attend")
