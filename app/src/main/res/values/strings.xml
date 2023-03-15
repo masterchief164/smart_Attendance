@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">smart attendance</string>
     <string name="server_client_id">197392019228-d0n763iqtt9hfoahuqmme50aqeu8ausm.apps.googleusercontent.com</string>
+    <string name="logout">Logout</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="courses">Courses</string>
 </resources>
