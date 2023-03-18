@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.util.Log.d
 import android.util.Log.e
 import com.example.smart_attendance.api.APIInterface
+import com.example.smart_attendance.data.Course
 import com.example.smart_attendance.data.QRData
 import com.example.smart_attendance.data.User
 import com.example.smart_attendance.other.Resource
@@ -25,8 +26,7 @@ class DefaultMainRepository @Inject constructor(
         return if (userString != null) {
             val user = gson.fromJson(userString, User::class.java)
             Resource.Success(user)
-        } else
-            Resource.Error("User not found")
+        } else Resource.Error("User not found")
     }
 
     override suspend fun logoutUser() {
@@ -55,6 +55,33 @@ class DefaultMainRepository @Inject constructor(
             cookie = "token=$cookie;"
             d("cookie", cookie.toString())
             retrofitApi.postAttendance(cookie, sessionDetails)
+        } catch (e: IOException) {
+            e("Main Activity", "IOEException, no internet?", e)
+            return Resource.Error("Network Failure")
+        } catch (e: HttpException) {
+            e("Main Activity", "HTTP exception, unexpected response", e)
+            return Resource.Error("Network Failure")
+        }
+        d("Main Activity", "Response: $response")
+        if (response.isSuccessful && response.body() != null) {
+            d("Main Activity", "Response: ${response.body()}")
+            return Resource.Success(response.body()!!)
+        } else {
+            d("LoginActivity", "Login Failed")
+            response.errorBody()?.let {
+                e("LoginActivity", it.string())
+            }
+        }
+        return Resource.Error("Login Failed")
+    }
+
+    override suspend fun getCourses(): Resource<List<Course>> {
+        val response = try {
+            d("Course Activity", "getting courses")
+            var cookie = sharedPreferences.getString("COOKIE", "")
+            cookie = "token=$cookie;"
+            d("cookie", cookie.toString())
+            retrofitApi.getCourses(cookie)
         } catch (e: IOException) {
             e("Main Activity", "IOEException, no internet?", e)
             return Resource.Error("Network Failure")

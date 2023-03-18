@@ -39,6 +39,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.courses.setOnClickListener{
+            Intent(this, CoursesActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
         binding.logout.setOnClickListener {
             mainViewModel.logoutUser()
             Intent(this, LoginActivity::class.java).also {
