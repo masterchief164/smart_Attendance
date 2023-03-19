@@ -1,5 +1,6 @@
 package com.example.smart_attendance
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log.e
@@ -37,7 +38,10 @@ class CoursesActivity : AppCompatActivity() {
             override fun onItemClick(position: Int) {
                 val course = courses[position]
                 e("Courses", "itemClicked ${courses[position]._id}") // TODO Show session details and attendance
-
+                Intent(this@CoursesActivity, CourseDetails::class.java).also {
+                    it.putExtra("courseId", course._id)
+                    startActivity(it)
+                }
             }
         })
         binding.coursesRecyclerView.layoutManager = GridLayoutManager(this, 2)

@@ -6,6 +6,7 @@ import android.util.Log.e
 import com.example.smart_attendance.api.APIInterface
 import com.example.smart_attendance.data.Course
 import com.example.smart_attendance.data.QRData
+import com.example.smart_attendance.data.SessionsData
 import com.example.smart_attendance.data.User
 import com.example.smart_attendance.other.Resource
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -97,6 +98,33 @@ class DefaultMainRepository @Inject constructor(
             d("LoginActivity", "Login Failed")
             response.errorBody()?.let {
                 e("LoginActivity", it.string())
+            }
+        }
+        return Resource.Error("Login Failed")
+    }
+
+    override suspend fun getSessionsDetail(courseId: String):Resource<SessionsData>{
+        val response = try{
+            d("Sessions Activity", "getting sessions")
+            var cookie = sharedPreferences.getString("COOKIE", "")
+            cookie = "token=$cookie;"
+            d("cookie", cookie.toString())
+            retrofitApi.getSessions(cookie, courseId)
+        } catch (e: IOException) {
+            e("Session Activity", "IOEException, no internet?", e)
+            return Resource.Error("Network Failure")
+        } catch (e: HttpException) {
+            e("Session Activity", "HTTP exception, unexpected response", e)
+            return Resource.Error("Network Failure")
+        }
+        d("Session Activity", "Response: $response")
+        if (response.isSuccessful && response.body() != null) {
+            d("Session Activity", "Response: ${response.body()}")
+            return Resource.Success(response.body()!!)
+        } else {
+            d("Session Activity", "Login Failed")
+            response.errorBody()?.let {
+                e("Session Activity", it.string())
             }
         }
         return Resource.Error("Login Failed")

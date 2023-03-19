@@ -1,8 +1,13 @@
 package com.example.smart_attendance.data
 
 data class Session(
+    val __v: Int,
+    val _id: String,
+    val attended: Boolean,
+    val attendees: List<String>,
     val courseId: String,
-    val instructor: User,
+    val createdAt: String,
     val date: String,
-    val attendees: User,
+    val instructor: String,
+    val updatedAt: String
 )

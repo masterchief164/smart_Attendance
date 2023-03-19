@@ -5,4 +5,9 @@
     <string name="scan_qr">Scan QR</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="courses">Courses</string>
+    <string name="sessions">Sessions</string>
+    <string name="attended">Attended</string>
+    <string name="datetime">DateTime</string>
+    <string name="total_sessions">Total Sessions: %1$d</string>
+    <string name="attended_sessions">Attended Sessions: %1$d</string>
 </resources>
