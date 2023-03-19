@@ -1,10 +1,14 @@
 package com.example.smart_attendance
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log.d
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.smart_attendance.data.QRData
@@ -18,6 +22,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
+
+    companion object {
+        private const val CAMERA_PERMISSION_CODE = 101
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +67,26 @@ class MainActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+
+        requestPermission(CAMERA_PERMISSION_CODE)
+
+    }
+
+    private fun requestPermission(requestCode: Int) {
+        if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.CAMERA), requestCode)
+        }
+    }
+
+
+    // This function is called when the user accepts or decline the permission.
+    // Request Code is used to check which permission called this function.
+    // This request code is provided when the user is prompt for permission.
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     private fun attendSession(sessionDetails: QRData) {
