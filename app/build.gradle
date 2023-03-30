@@ -9,11 +9,11 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.smart_attendance"
+        applicationId 'com.shaswat.smart_attendance'
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,7 +39,7 @@ android {
         jvmTarget = '1.8'
     }
     buildToolsVersion '30.0.3'
-    namespace 'com.example.smart_attendance'
+    namespace 'com.shaswat.smart_attendance'
 }
 
 dependencies {
