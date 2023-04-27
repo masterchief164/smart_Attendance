@@ -10,4 +10,6 @@
     <string name="datetime">DateTime</string>
     <string name="total_sessions">Total Sessions: %1$d</string>
     <string name="attended_sessions">Attended Sessions: %1$d</string>
+    <string name="select_images">Select Images</string>
+    <string name="submit_images">Submit Images</string>
 </resources>

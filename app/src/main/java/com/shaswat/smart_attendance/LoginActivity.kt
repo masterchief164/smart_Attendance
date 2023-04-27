@@ -9,15 +9,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import com.shaswat.smart_attendance.other.EventObserver
-import com.shaswat.smart_attendance.viewModels.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.shaswat.smart_attendance.databinding.ActivityLoginBinding
+import com.shaswat.smart_attendance.other.EventObserver
+import com.shaswat.smart_attendance.viewModels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.InputStream
+
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -105,9 +107,17 @@ class LoginActivity : AppCompatActivity() {
             binding.button2.isVisible = true
             binding.textView.isVisible = true
             d("LoginActivity", "Success: $user")
-            Intent(this, MainActivity::class.java).also {
-                startActivity(it)
-                finish()
+            if (user.faceData){
+                Intent(this, MainActivity::class.java).also {
+                    startActivity(it)
+                    finish()
+                }
+            }
+            else { // Todo take photos and send to server if facedata is true
+                Intent(this, SelectImages::class.java).also {
+                    startActivity(it)
+                    finish()
+                }
             }
         })
     }

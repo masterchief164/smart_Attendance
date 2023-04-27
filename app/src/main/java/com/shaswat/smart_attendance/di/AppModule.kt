@@ -46,7 +46,7 @@ object AppModule {
     @Provides
     fun providesRetrofitInstance(): Retrofit = Retrofit.Builder()
         .baseUrl("https://smartattendance.ddns.net")
-//        .client(com.shaswat.smart_attendance.other.UnsafeOkHttpClient.getUnsafeOkHttpClient())
+//        .client(UnsafeOkHttpClient.getUnsafeOkHttpClient())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

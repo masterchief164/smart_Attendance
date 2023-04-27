@@ -12,7 +12,10 @@ import com.shaswat.smart_attendance.other.Resource
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.Tasks.await
 import com.google.gson.Gson
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.HttpException
+import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 
@@ -103,8 +106,8 @@ class DefaultMainRepository @Inject constructor(
         return Resource.Error("Login Failed")
     }
 
-    override suspend fun getSessionsDetail(courseId: String):Resource<SessionsData>{
-        val response = try{
+    override suspend fun getSessionsDetail(courseId: String): Resource<SessionsData> {
+        val response = try {
             d("Sessions Activity", "getting sessions")
             var cookie = sharedPreferences.getString("COOKIE", "")
             cookie = "token=$cookie;"
@@ -128,5 +131,38 @@ class DefaultMainRepository @Inject constructor(
             }
         }
         return Resource.Error("Login Failed")
+    }
+
+    override suspend fun uploadImages(files: ArrayList<File>): Resource<Boolean> {
+        var cookie = sharedPreferences.getString("COOKIE", "")
+        cookie = "token=$cookie;"
+        return try {
+            retrofitApi.uploadImage(
+                token = cookie,
+                image1 = MultipartBody.Part.createFormData(
+                    "File1",
+                    filename = files[0].name,
+                    files[0].asRequestBody()
+                ),
+                image2 = MultipartBody.Part.createFormData(
+                    "File2",
+                    filename = files[1].name,
+                    files[1].asRequestBody()
+                ),
+                image3 = MultipartBody.Part.createFormData(
+                    "File3",
+                    filename = files[2].name,
+                    files[2].asRequestBody()
+                ),
+            )
+            Resource.Success(true)
+        } catch (e: IOException) {
+            e("main Repo", e.message.toString())
+            e.printStackTrace()
+            Resource.Error(e.message.toString())
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            Resource.Error(e.message())
+        }
     }
 }

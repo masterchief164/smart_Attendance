@@ -1,12 +1,12 @@
 package com.shaswat.smart_attendance.api
 
 import com.shaswat.smart_attendance.data.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
+
 
 interface APIInterface {
     @POST("/auth/googleLogin")
@@ -28,5 +28,14 @@ interface APIInterface {
         @Header("Cookie") token: String,
         @Path("courseId") courseId: String
     ): Response<SessionsData>
+
+    @Multipart
+    @POST("/session/addFace")
+    suspend fun uploadImage(
+        @Header("Cookie") token: String,
+        @Part image1: MultipartBody.Part,
+        @Part image2: MultipartBody.Part,
+        @Part image3: MultipartBody.Part,
+    )
 
 }
