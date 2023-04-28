@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shaswat.smart_attendance.data.QRData
+import com.shaswat.smart_attendance.data.TempSession
 import com.shaswat.smart_attendance.data.User
 import com.shaswat.smart_attendance.other.Event
 import com.shaswat.smart_attendance.other.Resource
@@ -25,8 +26,8 @@ class MainViewModel @Inject constructor(
     private val _getQRDataStatus = MutableLiveData<Event<Resource<QRData>>>()
     val getQRDataStatus: LiveData<Event<Resource<QRData>>> = _getQRDataStatus
 
-    private val _attendSessionStatus = MutableLiveData<Event<Resource<Boolean>>>()
-    val attendSessionStatus: LiveData<Event<Resource<Boolean>>> = _attendSessionStatus
+    private val _attendSessionStatus = MutableLiveData<Event<Resource<TempSession>>>()
+    val attendSessionStatus: LiveData<Event<Resource<TempSession>>> = _attendSessionStatus
 
     fun getUser() {
         _getUserStatus.postValue(Event(Resource.Loading()))

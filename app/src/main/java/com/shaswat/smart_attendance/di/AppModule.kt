@@ -45,8 +45,8 @@ object AppModule {
     @Singleton
     @Provides
     fun providesRetrofitInstance(): Retrofit = Retrofit.Builder()
-        .baseUrl("https://smartattendance.ddns.net")
-//        .client(UnsafeOkHttpClient.getUnsafeOkHttpClient())
+        .baseUrl("https://192.168.69.13:8001")
+        .client(UnsafeOkHttpClient.getUnsafeOkHttpClient())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

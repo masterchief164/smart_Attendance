@@ -4,14 +4,11 @@ import android.content.SharedPreferences
 import android.util.Log.d
 import android.util.Log.e
 import com.shaswat.smart_attendance.api.APIInterface
-import com.shaswat.smart_attendance.data.Course
-import com.shaswat.smart_attendance.data.QRData
-import com.shaswat.smart_attendance.data.SessionsData
-import com.shaswat.smart_attendance.data.User
 import com.shaswat.smart_attendance.other.Resource
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.Tasks.await
 import com.google.gson.Gson
+import com.shaswat.smart_attendance.data.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.HttpException
@@ -52,7 +49,7 @@ class DefaultMainRepository @Inject constructor(
         }
     }
 
-    override suspend fun attendSession(sessionDetails: QRData): Resource<Boolean> {
+    override suspend fun attendSession(sessionDetails: QRData): Resource<TempSession> {
         val response = try {
             d("Main Activity", "attending session")
             var cookie = sharedPreferences.getString("COOKIE", "")

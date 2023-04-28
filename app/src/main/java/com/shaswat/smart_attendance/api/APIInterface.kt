@@ -16,7 +16,7 @@ interface APIInterface {
     suspend fun postAttendance(
         @Header("Cookie") token: String,
         @Body sessionDetails: QRData
-    ): Response<Boolean>
+    ): Response<TempSession>
 
     @GET("/course")
     suspend fun getCourses(

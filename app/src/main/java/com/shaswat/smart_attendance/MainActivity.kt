@@ -99,16 +99,16 @@ class MainActivity : AppCompatActivity() {
     private fun subscribeToObservers() {
         mainViewModel.getUserStatus.observe(this, EventObserver(
             onError = {
-                d("LoginActivity", "Error: $it")
+                d("MainActivity", "Error: $it")
             },
             onLoading = {
-                d("LoginActivity", "Loading")
+                d("MainActivity", "Loading")
                 binding.progressBar.isVisible = true
                 binding.email.isVisible = false
                 binding.userName.text = "Welcome Back, User!"
             }
         ) { user ->
-            d("LoginActivity", "Success: $user")
+            d("MainActivity", "Success: $user")
             binding.progressBar.isVisible = false
             binding.email.isVisible = true
             binding.userName.isVisible = true
