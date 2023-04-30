@@ -1,10 +1,10 @@
 package com.shaswat.smart_attendance.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.shaswat.smart_attendance.R
 import com.shaswat.smart_attendance.data.Course
 import com.shaswat.smart_attendance.databinding.CourseLayoutBinding
 
@@ -46,9 +46,21 @@ class CoursesAdapter(
 
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
         val course = courses[position]
+        val colors = listOf(
+            "#00539CFF",
+            "#EEA47FFF",
+            "#2F3C7E",
+            "#FBEAEB",
+            "#101820FF",
+            "#FEE715FF",
+            "#F96167",
+            "#FCE77D",
+            "#CCF381",
+            "#4831D4"
+        )
         holder.itemView.apply {
             holder.courseNameTextView.text = course.name
-            holder.courseImageView.setColorFilter(R.color.purple_500)
+            holder.courseImageView.setColorFilter(Color.parseColor(colors[(0..colors.size).random() % colors.size]))
         }
     }
 

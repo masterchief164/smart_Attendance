@@ -13,7 +13,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.shaswat.smart_attendance.data.QRData
 import com.shaswat.smart_attendance.databinding.ActivityMainBinding
-import com.shaswat.smart_attendance.di.GlideApp
 import com.shaswat.smart_attendance.other.EventObserver
 import com.shaswat.smart_attendance.viewModels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,6 +63,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.scanQR.setOnClickListener {
             Intent(this, QRScanner::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.editProfile.setOnClickListener {
+            Intent(this, EditProfile::class.java).also {
                 startActivity(it)
             }
         }

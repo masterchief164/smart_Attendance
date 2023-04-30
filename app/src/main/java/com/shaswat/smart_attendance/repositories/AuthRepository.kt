@@ -8,5 +8,5 @@ interface AuthRepository {
 
     fun saveCookie(cookie: String)
 
-    suspend fun saveUser(user: User)
+    fun saveUser(user: User)
 }

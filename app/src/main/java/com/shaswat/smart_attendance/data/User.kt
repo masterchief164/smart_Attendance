@@ -34,4 +34,7 @@ data class User(
     @SerializedName("department")
     @Expose
     val department: String = "",
+    @SerializedName("roomNumber")
+    @Expose
+    val roomNumber: String = "",
 )

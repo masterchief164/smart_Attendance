@@ -4,14 +4,11 @@ import android.content.SharedPreferences
 import android.util.Log.d
 import android.util.Log.e
 import com.shaswat.smart_attendance.api.APIInterface
-import com.shaswat.smart_attendance.data.Course
-import com.shaswat.smart_attendance.data.QRData
-import com.shaswat.smart_attendance.data.SessionsData
-import com.shaswat.smart_attendance.data.User
 import com.shaswat.smart_attendance.other.Resource
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.Tasks.await
 import com.google.gson.Gson
+import com.shaswat.smart_attendance.data.*
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -103,8 +100,8 @@ class DefaultMainRepository @Inject constructor(
         return Resource.Error("Login Failed")
     }
 
-    override suspend fun getSessionsDetail(courseId: String):Resource<SessionsData>{
-        val response = try{
+    override suspend fun getSessionsDetail(courseId: String): Resource<SessionsData> {
+        val response = try {
             d("Sessions Activity", "getting sessions")
             var cookie = sharedPreferences.getString("COOKIE", "")
             cookie = "token=$cookie;"
@@ -128,5 +125,22 @@ class DefaultMainRepository @Inject constructor(
             }
         }
         return Resource.Error("Login Failed")
+    }
+
+    override suspend fun updateProfile(user: UpdateProfile): Resource<User> {
+        val response = try {
+            d("Profile Activity", "updating profile")
+            var cookie = sharedPreferences.getString("COOKIE", "")
+            cookie = "token=$cookie;"
+            retrofitApi.updateProfile(cookie, user)
+        } catch (e: IOException) {
+            e("Profile Activity", "IOEException, no internet?", e)
+            return Resource.Error("Network Failure")
+        } catch (e: HttpException) {
+            e("Profile Activity", "HTTP exception, unexpected response", e)
+            return Resource.Error("Network Failure")
+        }
+
+        return Resource.Success(response.body()!!)
     }
 }
