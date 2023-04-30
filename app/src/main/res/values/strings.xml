@@ -10,4 +10,5 @@
     <string name="datetime">DateTime</string>
     <string name="total_sessions">Total Sessions: %1$d</string>
     <string name="attended_sessions">Attended Sessions: %1$d</string>
+    <string name="smart_attendance">Smart Attendance</string>
 </resources>

@@ -87,23 +87,23 @@ class LoginActivity : AppCompatActivity() {
             onError = {
                 binding.progressBar2.isVisible = false
                 binding.student.isVisible = true
-                binding.button2.isVisible = true
+                binding.appIcon.isVisible = true
                 binding.textView.isVisible = true
                 d("LoginActivity", "Error: $it")
             },
             onLoading = {
                 binding.progressBar2.isVisible = true
                 binding.student.isVisible = false
-                binding.button2.isVisible = false
                 binding.textView.isVisible = false
+                binding.appIcon.isVisible = false
                 d("LoginActivity", "Loading")
             }
         ) { user ->
 
             binding.progressBar2.isVisible = false
             binding.student.isVisible = true
-            binding.button2.isVisible = true
             binding.textView.isVisible = true
+            binding.appIcon.isVisible = true
             d("LoginActivity", "Success: $user")
             Intent(this, MainActivity::class.java).also {
                 startActivity(it)
